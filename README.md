@@ -45,7 +45,4 @@ If you have Tampermonkey installed, click here to install the script: [yt-studio
 - Open the browser DevTools Console (F12) and look for errors from the script.
 
 **Compatibility & Maintenance**
-- Works on modern browsers supporting Tampermonkey. YouTube Studio's markup changes may break selectors; the script may need updates when that happens.
-
-**Files**
-- Script: [yt-studio-qol-enhancements.user.js](yt-studio-qol-enhancements.user.js)
+- Works on modern browsers supporting Tampermonkey. YouTube may occasionally update parts of the Studio which may break this script.
