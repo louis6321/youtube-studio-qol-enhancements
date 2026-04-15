@@ -2,7 +2,7 @@
 
 A Tampermonkey userscript that improves the YouTube Studio / Live workflow by showing full titles and applying a set of small quality-of-life fixes and UI tweaks.
 
-Supported file in this repo: [yt-studio-full-titles.user.js](yt-studio-full-titles.user.js)
+Supported file in this repo: [yt-studio-qol-enhancements.user.js](yt-studio-qol-enhancements.user.js)
 
 **Summary**
 - **Purpose**: Reveal full video titles, add convenient controls (copy URL), improve Live ingestion UI, and provide optional sorting/visibility helpers across YouTube Studio.
@@ -25,8 +25,8 @@ Supported file in this repo: [yt-studio-full-titles.user.js](yt-studio-full-titl
 
 **Installation (Tampermonkey)**
 1. Install Tampermonkey for your browser (Chrome/Edge/Firefox/Edge Chromium).
-2. Direct install (recommended if hosting is available): open the script URL in the browser and let Tampermonkey import it. Example URL (if present in header): `https://louis.au/yt-studio-full-titles.user.js`.
-3. Manual install: open Tampermonkey → Dashboard → `+` (Add a new script). Copy the entire contents of [yt-studio-full-titles.user.js](yt-studio-full-titles.user.js) and paste into the editor, then `File → Save`.
+2. Direct install (recommended if hosting is available): open the [script URL](https://github.com/louis6321/youtube-studio-qol-enhancements/raw/refs/heads/main/yt-studio-qol-enhancements.user.js) in the browser and let Tampermonkey import it.
+3. Manual install: open Tampermonkey → Dashboard → `+` (Add a new script). Copy the entire contents of [yt-studio-qol-enhancements.user.js](yt-studio-qol-enhancements.user.js) and paste into the editor, then `File → Save`.
 4. Open YouTube Studio to verify the script is active.
 
 **Usage & Configuration**
@@ -48,4 +48,4 @@ Supported file in this repo: [yt-studio-full-titles.user.js](yt-studio-full-titl
 - Works on modern browsers supporting Tampermonkey. YouTube Studio's markup changes may break selectors; the script may need updates when that happens.
 
 **Files**
-- Script: [yt-studio-full-titles.user.js](yt-studio-full-titles.user.js)
+- Script: [yt-studio-qol-enhancements.user.js](yt-studio-qol-enhancements.user.js)
