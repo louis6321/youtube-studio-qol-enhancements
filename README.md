@@ -2,7 +2,7 @@
 
 A Tampermonkey userscript that improves the YouTube Studio / Live workflow by showing full titles and applying a set of small quality-of-life fixes and UI tweaks.
 
-Supported file in this repo: [yt-studio-qol-enhancements.user.js](yt-studio-qol-enhancements.user.js)
+If you have Tampermonkey installed, click here to install the script: [yt-studio-qol-enhancements.user.js](https://github.com/louis6321/youtube-studio-qol-enhancements/raw/refs/heads/main/yt-studio-qol-enhancements.user.js)
 
 **Summary**
 - **Purpose**: Reveal full video titles, add convenient controls (copy URL), improve Live ingestion UI, and provide optional sorting/visibility helpers across YouTube Studio.
