@@ -16,7 +16,7 @@ If you have Tampermonkey installed, click here to install the script: [yt-studio
 - **Rows per page**: Optionally set the videos table to `50` rows per page automatically.
 - **Account switcher alphabetical sort**: Sort channel/account entries alphabetically when account menus open.
 - **Visibility warnings**: Small emoji indicators next to visibility labels (Public / Unlisted / Private / Age-restricted) for quick scanning.
-- **Copy Stream URL column & compact button**: Adds a compact `Copy Stream URL` icon column (left of the "Type" column) that copies the video watch URL to clipboard with fallback support.
+- **Copy Stream URL column & compact button**: Adds a compact `Copy Stream URL` icon column (left of the "Notices" column) that copies the video watch URL to clipboard with fallback support.
 - **Optional stream title sorting (A→Z)**: On `/livestreaming` pages you can enable alphabetical sorting of streams while preserving section groupings (e.g., "Live now" / "Upcoming").
 - **Stream key / ingestion sizing**: Always-on fix to widen the ingestion dropdown so the Stream Key isn't truncated.
 - **Menu-safe DOM changes**: Avoids re-running DOM mutations while menus/popups are open (prevents menus from auto-closing).

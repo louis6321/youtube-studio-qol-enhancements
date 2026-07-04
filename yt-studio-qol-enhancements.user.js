@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         YouTube Live Studio QOL
 // @namespace    https://louis.au/
-// @version      4.6.5
-// @description  YouTube Studio QoL: intrinsic-width titles, optional wrapping, hide useless info, hide descriptions in wrap mode, truncate descriptions in non-wrap, rows-per-page=50, account sorting, visibility warnings, compact Copy Stream URL icon button (left of Type), optional title sorting (A–Z) on /livestreaming (and /livestreaming/manage). Always-on: widen Stream Key dropdown in Live to prevent truncation. Fix: don’t re-run DOM mutations while menus are open (prevents menus auto-closing).
+// @version      4.6.6
+// @description  YouTube Studio QoL: intrinsic-width titles, optional wrapping, hide useless info, hide descriptions in wrap mode, truncate descriptions in non-wrap, rows-per-page=50, account sorting, visibility warnings, compact Copy Stream URL icon button (left of Notices), optional title sorting (A–Z) on /livestreaming (and /livestreaming/manage). Always-on: widen Stream Key dropdown in Live to prevent truncation. Fix: don’t re-run DOM mutations while menus are open (prevents menus auto-closing).
 // @author       louis.au
 // @match        https://studio.youtube.com/*
 // @downloadURL  https://github.com/louis6321/youtube-studio-qol-enhancements/raw/refs/heads/main/yt-studio-qol-enhancements.user.js
@@ -410,7 +410,7 @@
   }
 
   /**************************************************************************
-   * Copy Stream URL column (left of Type) + compact icon button
+   * Copy Stream URL column (left of Notices) + compact icon button
    **************************************************************************/
   function extractVideoIdFromRow(row) {
     const a = row.querySelector('a#video-title');
@@ -446,20 +446,20 @@
   }
 
   function ensureCopyColumnHeader() {
-    const typeHeader =
-      document.querySelector('[role="columnheader"].tablecell-live-source') ||
-      document.querySelector('.tablecell-live-source[role="columnheader"]') ||
-      document.querySelector('div[role="columnheader"][class*="tablecell-live-source"]');
+    const noticesHeader =
+      document.querySelector('[role="columnheader"].tablecell-restrictions') ||
+      document.querySelector('.tablecell-restrictions[role="columnheader"]') ||
+      document.querySelector('div[role="columnheader"][class*="tablecell-restrictions"]');
 
-    if (!typeHeader) return;
+    if (!noticesHeader) return;
 
-    const parent = typeHeader.parentElement;
+    const parent = noticesHeader.parentElement;
     if (!parent) return;
 
     const existing = parent.querySelector(`[role="columnheader"].${COPY_CELL_CLASS}`);
     if (existing) {
-      if (existing.nextElementSibling === typeHeader) return;
-      try { parent.insertBefore(existing, typeHeader); } catch (_) {}
+      if (existing.nextElementSibling === noticesHeader) return;
+      try { parent.insertBefore(existing, noticesHeader); } catch (_) {}
       return;
     }
 
@@ -475,19 +475,18 @@
     header.style.flex = '0 0 44px';
     header.style.maxWidth = '44px';
 
-    parent.insertBefore(header, typeHeader);
+    parent.insertBefore(header, noticesHeader);
   }
 
   function ensureCopyUrlButtons() {
     document.querySelectorAll('ytcp-video-row').forEach(row => {
-      const typeCell = row.querySelector('.tablecell-live-source[role="cell"]');
       const restrictionsCell = row.querySelector('.tablecell-restrictions[role="cell"]');
-      if (!typeCell || !restrictionsCell) return;
+      if (!restrictionsCell) return;
 
       const existing = row.querySelector(`.${COPY_CELL_CLASS}[role="cell"]`);
       if (existing) {
-        if (existing.nextElementSibling !== typeCell) {
-          try { typeCell.parentElement?.insertBefore(existing, typeCell); } catch (_) {}
+        if (existing.nextElementSibling !== restrictionsCell) {
+          try { restrictionsCell.parentElement?.insertBefore(existing, restrictionsCell); } catch (_) {}
         }
         row.setAttribute(COPY_DONE_ATTR, '1');
         return;
@@ -539,7 +538,7 @@
       });
 
       cell.appendChild(btn);
-      typeCell.insertAdjacentElement('beforebegin', cell);
+      restrictionsCell.insertAdjacentElement('beforebegin', cell);
       row.setAttribute(COPY_DONE_ATTR, '1');
     });
   }
