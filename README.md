@@ -12,7 +12,7 @@ If you have Tampermonkey installed, click here to install the script: [yt-studio
 **Key Features**
 - **Title wrapping / intrinsic width**: Toggle between wrapping long titles (multi-line) or keeping titles inline with intrinsic width so full text is visible.
 - **Description handling**: In wrap mode the inline descriptions are hidden; in non-wrap mode descriptions are truncated to a configurable length.
-- **Hide "useless" info**: Optionally hide table cells that contain redundant values (for example, `Streaming software` / `None`).
+- **Hide "useless" info**: Optionally hide redundant values (for example, `Streaming software`) and hide the `Notices` column when it contains no real notice data.
 - **Rows per page**: Optionally set the videos table to `50` rows per page automatically.
 - **Account switcher alphabetical sort**: Sort channel/account entries alphabetically when account menus open.
 - **Visibility warnings**: Small emoji indicators next to visibility labels (Public / Unlisted / Private / Age-restricted) for quick scanning.

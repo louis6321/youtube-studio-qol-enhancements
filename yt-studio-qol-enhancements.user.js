@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Studio QOL
 // @namespace    https://louis.au/
-// @version      4.6.6
+// @version      4.6.7
 // @description  YouTube Studio QoL: intrinsic-width titles, optional wrapping, hide useless info, hide descriptions in wrap mode, truncate descriptions in non-wrap, rows-per-page=50, account sorting, visibility warnings, compact Copy Stream URL icon button (left of Notices), optional title sorting (A–Z) on /livestreaming (and /livestreaming/manage). Always-on: widen Stream Key dropdown in Live to prevent truncation. Fix: don’t re-run DOM mutations while menus are open (prevents menus auto-closing).
 // @author       louis.au
 // @match        https://studio.youtube.com/*
@@ -307,8 +307,36 @@
   }
 
   /**************************************************************************
-   * Hide useless info (cells only)
+   * Hide useless info
    **************************************************************************/
+  function getNoticesHeader() {
+    return (
+      document.querySelector('[role="columnheader"].tablecell-restrictions') ||
+      document.querySelector('.tablecell-restrictions[role="columnheader"]') ||
+      document.querySelector('div[role="columnheader"][class*="tablecell-restrictions"]')
+    );
+  }
+
+  function normalizedNoticeText(text) {
+    return norm(text)
+      .replace(/[\u2010-\u2015\u2212]/g, '-')
+      .replace(/^(notices|restrictions)\s*:\s*/, '')
+      .trim();
+  }
+
+  function isEmptyNoticeText(text) {
+    const t = normalizedNoticeText(text);
+    return !t || t === '-' || t === 'none' || t === 'no restrictions' || t === 'n/a';
+  }
+
+  function hasNoticeData(cell) {
+    if (!isEmptyNoticeText(cell?.textContent || '')) return true;
+
+    return Array.from(cell?.querySelectorAll('[aria-label], [title]') || []).some(el => {
+      return !isEmptyNoticeText(el.getAttribute('aria-label') || el.getAttribute('title') || '');
+    });
+  }
+
   function updateUselessInfoVisibility() {
     const enabled = isHideUselessEnabled();
 
@@ -316,8 +344,14 @@
       cell.classList.toggle(CLASS_HIDE, enabled && norm(cell.textContent) === 'streaming software');
     });
 
-    document.querySelectorAll('.tablecell-restrictions[role="cell"]').forEach(cell => {
-      cell.classList.toggle(CLASS_HIDE, enabled && norm(cell.textContent) === 'none');
+    const noticesHeader = getNoticesHeader();
+    const noticesCells = Array.from(document.querySelectorAll('.tablecell-restrictions[role="cell"]'));
+    const shouldHideNoticesColumn =
+      enabled && noticesCells.length > 0 && !noticesCells.some(cell => hasNoticeData(cell));
+
+    if (noticesHeader) noticesHeader.classList.toggle(CLASS_HIDE, shouldHideNoticesColumn);
+    noticesCells.forEach(cell => {
+      cell.classList.toggle(CLASS_HIDE, shouldHideNoticesColumn);
     });
   }
 
@@ -446,11 +480,7 @@
   }
 
   function ensureCopyColumnHeader() {
-    const noticesHeader =
-      document.querySelector('[role="columnheader"].tablecell-restrictions') ||
-      document.querySelector('.tablecell-restrictions[role="columnheader"]') ||
-      document.querySelector('div[role="columnheader"][class*="tablecell-restrictions"]');
-
+    const noticesHeader = getNoticesHeader();
     if (!noticesHeader) return;
 
     const parent = noticesHeader.parentElement;
