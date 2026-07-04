@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Studio QOL
 // @namespace    https://louis.au/
-// @version      4.6.7
+// @version      4.6.8
 // @description  YouTube Studio QoL: intrinsic-width titles, optional wrapping, hide useless info, hide descriptions in wrap mode, truncate descriptions in non-wrap, rows-per-page=50, account sorting, visibility warnings, compact Copy Stream URL icon button (left of Notices), optional title sorting (A–Z) on /livestreaming (and /livestreaming/manage). Always-on: widen Stream Key dropdown in Live to prevent truncation. Fix: don’t re-run DOM mutations while menus are open (prevents menus auto-closing).
 // @author       louis.au
 // @match        https://studio.youtube.com/*
