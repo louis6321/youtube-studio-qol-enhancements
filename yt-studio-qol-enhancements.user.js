@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Studio QOL
 // @namespace    https://louis.au/
-// @version      4.6.8
+// @version      4.6.9
 // @description  YouTube Studio QoL: intrinsic-width titles, optional wrapping, hide useless info, hide descriptions in wrap mode, truncate descriptions in non-wrap, rows-per-page=50, account sorting, visibility warnings, compact Copy Stream URL icon button (left of Notices), optional title sorting (A–Z) on /livestreaming (and /livestreaming/manage). Always-on: widen Stream Key dropdown in Live to prevent truncation. Fix: don’t re-run DOM mutations while menus are open (prevents menus auto-closing).
 // @author       louis.au
 // @match        https://studio.youtube.com/*
@@ -317,20 +317,38 @@
     );
   }
 
+  function getVisibleText(el) {
+    return el?.innerText || el?.textContent || '';
+  }
+
   function normalizedNoticeText(text) {
     return norm(text)
+      .replace(/[\u200b-\u200f\u202a-\u202e\u2060\ufeff]/g, '')
       .replace(/[\u2010-\u2015\u2212]/g, '-')
-      .replace(/^(notices|restrictions)\s*:\s*/, '')
+      .replace(/^(notices|restrictions)\b[\s:,-]*/, '')
       .trim();
   }
 
   function isEmptyNoticeText(text) {
     const t = normalizedNoticeText(text);
-    return !t || t === '-' || t === 'none' || t === 'no restrictions' || t === 'n/a';
+    const meaningful = t.replace(/^[\s\-./]+|[\s\-./]+$/g, '').trim();
+    return (
+      !meaningful ||
+      /^[\s\-./]+$/.test(t) ||
+      meaningful === 'none' ||
+      meaningful === 'n/a' ||
+      meaningful === 'details' ||
+      meaningful === 'learn more' ||
+      meaningful === 'more info' ||
+      meaningful === 'information' ||
+      meaningful === 'status' ||
+      /^no (notices|issues|restrictions)( found)?$/.test(meaningful) ||
+      /^(all )?checks? complete\b/.test(meaningful)
+    );
   }
 
   function hasNoticeData(cell) {
-    if (!isEmptyNoticeText(cell?.textContent || '')) return true;
+    if (!isEmptyNoticeText(getVisibleText(cell))) return true;
 
     return Array.from(cell?.querySelectorAll('[aria-label], [title]') || []).some(el => {
       return !isEmptyNoticeText(el.getAttribute('aria-label') || el.getAttribute('title') || '');
