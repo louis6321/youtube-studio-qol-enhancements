@@ -309,6 +309,8 @@
   /**************************************************************************
    * Hide useless info
    **************************************************************************/
+  let noticesColumnHiddenUntilReload = false;
+
   function getNoticesHeader() {
     return (
       document.querySelector('[role="columnheader"].tablecell-restrictions') ||
@@ -348,7 +350,8 @@
   }
 
   function hasNoticeData(cell) {
-    if (!isEmptyNoticeText(getVisibleText(cell))) return true;
+    const visibleText = getVisibleText(cell);
+    if (normalizedNoticeText(visibleText)) return !isEmptyNoticeText(visibleText);
 
     return Array.from(cell?.querySelectorAll('[aria-label], [title]') || []).some(el => {
       return !isEmptyNoticeText(el.getAttribute('aria-label') || el.getAttribute('title') || '');
@@ -364,8 +367,12 @@
 
     const noticesHeader = getNoticesHeader();
     const noticesCells = Array.from(document.querySelectorAll('.tablecell-restrictions[role="cell"]'));
-    const shouldHideNoticesColumn =
-      enabled && noticesCells.length > 0 && !noticesCells.some(cell => hasNoticeData(cell));
+    const noticesColumnIsEmpty =
+      noticesCells.length > 0 && !noticesCells.some(cell => hasNoticeData(cell));
+
+    if (enabled && noticesColumnIsEmpty) noticesColumnHiddenUntilReload = true;
+
+    const shouldHideNoticesColumn = enabled && noticesColumnHiddenUntilReload;
 
     if (noticesHeader) noticesHeader.classList.toggle(CLASS_HIDE, shouldHideNoticesColumn);
     noticesCells.forEach(cell => {
