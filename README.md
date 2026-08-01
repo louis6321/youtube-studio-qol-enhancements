@@ -19,6 +19,7 @@ If you have Tampermonkey installed, click here to install the script: [yt-studio
 - **Copy Stream URL column & compact button**: Adds a compact `Copy Stream URL` icon column (left of the "Notices" column) that copies the video watch URL to clipboard with fallback support.
 - **Optional stream title sorting (A→Z)**: On `/livestreaming` pages you can enable alphabetical sorting of streams while preserving section groupings (e.g., "Live now" / "Upcoming").
 - **Stream key / ingestion sizing**: Always-on fix to widen the ingestion dropdown so the Stream Key isn't truncated.
+- **Recommendations panel**: Hides the promotional "Recommendations for you" section above the stream list.
 - **Menu-safe DOM changes**: Avoids re-running DOM mutations while menus/popups are open (prevents menus from auto-closing).
 - **Channel "videos/live" overlay**: Shows a warning overlay on unsupported `/channel/.../videos/live` pages with a shortcut to the correct `livestreaming` page and an option to suppress the warning.
 - **Persistent settings & menu commands**: Toggle features via the Tampermonkey menu; options persist using GM storage.
